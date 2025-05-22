@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>House Blend Coffee</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background-color: #f5f3ec;
+      color: #333;
+      text-align: center;
+      scroll-behavior: smooth;
+    }
+
+    .profile-container {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      max-width: 250px;
+      z-index: 10000;
+      transition: opacity 0.3s ease;
+    }
+
+    .profile-img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #333;
+    }
+
+    .profile-text {
+      display: flex;
+      flex-direction: column;
+      font-family: 'Georgia', serif;
+      font-size: 0.75rem;
+    }
+
+    .profile-badge {
+      font-weight: bold;
+    }
+
+    .profile-desc {
+      margin-top: 2px;
+    }
+
+    .burger-menu {
+      position: fixed !important;
+      top: 20px;
+      right: 20px;
+      width: 30px;
+      height: 24px;
+      cursor: pointer;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: transparent;
+      transition: opacity 0.3s ease;
+    }
+
+    .burger-menu span {
+      display: block;
+      height: 4px;
+      background-color: #333;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .dropdown-menu {
+      position: fixed;
+      top: 55px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+      display: none;
+      flex-direction: column;
+      padding: 10px 15px;
+      z-index: 9998;
+      min-width: 120px;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .dropdown-menu.show {
+      display: flex;
+    }
+
+    .dropdown-menu a {
+      padding: 8px 0;
+      color: #333;
+      text-decoration: none;
+      border-bottom: 1px solid #ddd;
+      user-select: none;
+    }
+
+    .dropdown-menu a:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown-menu a:hover {
+      color: #555;
+    }
+
+    section {
+      padding-top: 80px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .main-section h1 {
+      font-size: 4rem;
+      margin: 0;
+    }
+
+    .main-section h2 {
+      font-size: 1.5rem;
+      margin-top: 60px;
+    }
+
+    .main-section h3 {
+      font-size: 2rem;
+      margin: 10px 0;
+    }
+
+    .divider {
+      width: 40%;
+      margin: 10px auto;
+      border: 1px solid #aaa;
+    }
+
+    .composition {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    .info {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 60px;
+      margin-bottom: 40px;
+    }
+
+    .info h4 {
+      text-decoration: underline;
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+    }
+
+    .footer {
+  background-color: #1a1a1a; /* Warna gelap seperti di gambar */
+  color: #ffffff;
+  text-align: center;
+  padding: 20px 0;
+  font-family: 'Poppins', sans-serif; /* Gunakan font modern */
+  font-size: 14px;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.5);
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+    .diamonds {
+      font-size: 1.5rem;
+      letter-spacing: 4px;
+    }
+
+    .rating {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 60px;
+      margin-bottom: 80px;
+    }
+
+    .about-section, .contact-section {
+      padding: 50px 20px;
+    }
+
+    .about-section {
+      background-color: #f1ede4;
+    }
+
+    .contact-section {
+      background-color: #eeeae0;
+    }
+
+    form input, form textarea, form select {
+      width: 300px;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #999;
+      border-radius: 4px;
+      font-family: inherit;
+    }
+
+    form button {
+      padding: 10px 20px;
+      background-color: #333;
+      color: white;
+      border: none;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    form button:hover {
+      background-color: #555;
+    }
+
+    .dancing {
+      font-family: 'Dancing Script', cursive;
+    }
+
+    .cedar {
+      font-family: 'Cedarville Cursive', cursive;
+    }
+
+    img.coffee-image {
+      max-width: 100%;
+      height: auto;
+      margin: 20px 0;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 600px) {
+      .burger-menu {
+        top: 15px;
+        right: 15px;
+        width: 25px;
+        height: 20px;
+      }
+
+      .burger-menu span {
+        height: 3px;
+      }
+
+      .dropdown-menu {
+        top: 45px;
+        right: 15px;
+        font-size: 14px;
+        min-width: 100px;
+      }
+
+      section {
+        padding-top: 100px;
+      }
+
+      form input, form textarea, form select {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PROFIL -->
+  <div class="profile-container" id="profile">
+    <img src="barakudacoffeeee.png" alt="Profile" class="profile-img" />
+    <div class="profile-text">
+      <div class="profile-badge">BaraKuda</div>
+      <div class="profile-desc">Coffe & Roastery.</div>
+    </div>
+  </div>
+
+  <!-- BURGER MENU -->
+  <div class="burger-menu" id="burgerMenu" aria-label="Menu" role="button" tabindex="0" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- DROPDOWN MENU -->
+  <nav id="dropdownMenu" class="dropdown-menu" aria-hidden="true">
+    <a href="#home" class="dropdown-link">Home</a>
+    <a href="#about" class="dropdown-link">About</a>
+    <a href="#Order" class="dropdown-link">Order</a>
+    <a href="#ContactMe" class="dropdown-link">Contact Me</a>
+  </nav>
+
+  <!-- HOME SECTION -->
+  <section id="home" class="main-section">
+    <h2 class="cedar">House</h2>
+    <h1 class="dancing">Blend</h1>
+    <h3 class="cedar">Arabika Brazil & Robusta Gayo"</h3>
+    <p class="composition cedar">70% Arabika Brazil / 30% Robusta Gayo</p>
+    <div class="info">
+      <div>
+        <h4 class="cedar">Tasting Notes</h4>
+        <p class="cedar"> Smooth Dark Chocolate</p>
+      </div>
+      <div>
+        <h4 class="cedar">Roast Level</h4>
+        <p class="diamonds">◆ ◆ ◆ ◆ ◇</p>
+        <p class="cedar">Medium</p>
+      </div>
+    </div>
+    <div class="rating">
+      <div>
+        <p class="cedar"><strong>Body</strong></p>
+        <p class="diamonds">◆ ◆ ◇ ◇ ◇</p>
+      </div>
+      <div>
+        <p class="cedar"><strong>Acidity</strong></p>
+        <p class="diamonds">◆ ◆ ◆ ◆ ◇</p>
+      </div>
+      <div>
+        <p class="cedar"><strong>Sweety</strong></p>
+        <p class="diamonds">◆ ◆ ◆ ◇ ◇</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section id="about" class="about-section">
+    <h2>About the Coffee</h2>
+    <img src="product1.png" alt="House Blend" class="coffee-image" />
+    <p>This House Blend combines 70% Brazilian Arabica and 30% Gayo Robusta beans, offering a full-bodied experience with hints of dark chocolate and a smooth finish.</p>
+    <p><strong>Price:</strong> Rp 35.000 / 100gram</p>
+    <img src="product1.png" alt="House Blend" class="coffee-image" />
+    <p>This House Blend combines 70% Brazilian Arabica and 30% Gayo Robusta beans, offering a full-bodied experience with hints of dark chocolate and a smooth finish.</p>
+    <p><strong>Price:</strong> Rp 35.000 / 100gram</p>
+  </section>
+
+<!-- ORDER SECTION -->
+<section id="Order" class="contact-section">
+  <h2>Order Now</h2>
+  <form id="orderForm" onsubmit="sendOrderToWhatsApp(); return false;">
+    <input type="text" id="order-name" placeholder="Your Name" required><br />
+    <input type="text" id="telepon" placeholder="Nomor Telepon" required /><br />
+    <input type="text" id="provinsi" placeholder="Provinsi" required /><br />
+    <input type="text" id="kota" placeholder="Kota" required /><br />
+    <input type="text" id="kecamatan" placeholder="Kecamatan" required /><br />
+    <input type="text" id="kodepos" placeholder="Kode Pos" required /><br />
+    <input type="text" id="jalan" placeholder="Nama Jalan, Gedung,No. Rumah" required /><br />
+    <div>
+      <label><strong>Order:</strong></label><br />
+      <select id="product" onchange="updateHarga()">
+        <option value="House Blend 250gr" data-harga="35000">House Blend 100gram</option>
+        <option value="House Blend 500gr" data-harga="170000">House Blend 500gram</option>
+        <option value="House Blend 1kg" data-harga="340000">House Blend 1kg</option>
+      </select>
+    </div>
+    <div style="margin: 10px 0; display: flex; align-items: center; justify-content: center; gap: 10px;">
+      <label><strong>Jumlah:</strong></label>
+      <button type="button" onclick="updateJumlah(-1)">-</button>
+      <input type="number" id="jumlah" value="1" min="1" readonly style="width: 60px; text-align: center" />
+      <button type="button" onclick="updateJumlah(1)">+</button>
+    </div>
+    <div>
+      <label><strong>Harga per pcs:</strong></label><br />
+      <input type="text" id="harga" readonly />
+    </div>
+    <div>
+      <label><strong>Total:</strong></label><br />
+      <input type="text" id="total" readonly />
+    </div>
+    <button type="submit">Send to WhatsApp</button>
+  </form>
+</section>
+
+
+  <!-- CONTACT SECTION -->
+<section id="ContactMe" class="contact-section">
+  <h2>Contact Us</h2>
+  <form id="contactForm" onsubmit="sendContactToWhatsApp(); return false;">
+    <input type="text" id="contact-name" placeholder="Your Name" required><br>
+    <input type="email" id="email" placeholder="Your Email" required><br>
+    <textarea id="message" placeholder="Your Message" rows="4" required></textarea><br>
+    <button type="submit">Send</button>
+  </form>
+
+  <footer class="footer">
+<div class="footer-container">
+    &copy; 2025 BaraKuda Coffee || Support By: <a href="https://ridhosandhika2006.github.io/Website-Portfolio/">Studioofficialridho</a> || Semua hak cipta dilindungi.
+</section>
+
+  <script>
+    function updateHarga() {
+      const select = document.getElementById('product');
+      const harga = select.options[select.selectedIndex].getAttribute('data-harga');
+      document.getElementById('harga').value = harga;
+      updateTotal();
+    }
+
+    function updateJumlah(change) {
+      const jumlahInput = document.getElementById('jumlah');
+      let jumlah = parseInt(jumlahInput.value);
+      jumlah += change;
+      if (jumlah < 1) jumlah = 1;
+      jumlahInput.value = jumlah;
+      updateTotal();
+    }
+
+    function updateTotal() {
+      const harga = parseInt(document.getElementById('harga').value);
+      const jumlah = parseInt(document.getElementById('jumlah').value);
+      const total = harga * jumlah;
+      document.getElementById('total').value = total;
+    }
+
+function sendOrderToWhatsApp() {
+  const name = document.getElementById('order-name').value;
+  const telepon = document.getElementById('telepon').value;
+  const provinsi = document.getElementById('provinsi').value;
+  const kota = document.getElementById('kota').value;
+  const kecamatan = document.getElementById('kecamatan').value;
+  const kodepos = document.getElementById('kodepos').value;
+  const jalan = document.getElementById('jalan').value;
+  const product = document.getElementById('product').value;
+  const jumlah = document.getElementById('jumlah').value;
+  const harga = document.getElementById('harga').value;
+  const total = document.getElementById('total').value;
+
+  const text = 
+`Nama: ${name}
+Telepon: ${telepon}
+Provinsi: ${provinsi}
+Kota: ${kota}
+Kecamatan: ${kecamatan}
+Kode Pos: ${kodepos}
+Alamat: ${jalan}
+
+*Memesan:*
+Order: ${product}
+Jumlah: ${jumlah}
+Harga per pcs: Rp ${harga}
+Total: Rp ${total}`;
+
+  const whatsappNumber = '6281275623551';
+  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
+  window.open(url, '_blank');
+}
+
+
+
+    function sendContactToWhatsApp() {
+      const name = document.getElementById("contact-name").value;
+      const email = document.getElementById("email").value;
+      const message = document.getElementById("message").value;
+
+      const text = `Nama: ${name}\nEmail: ${email}\nPesan: ${message}`;
+      const whatsappNumber = "6281275623551";
+      const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
+      window.open(url, "_blank");
+    }
+
+    updateHarga();
+
+    const burgerMenu = document.getElementById('burgerMenu');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    burgerMenu.addEventListener('click', () => {
+      const isOpen = dropdownMenu.classList.toggle('show');
+      dropdownMenu.setAttribute('aria-hidden', String(!isOpen));
+      burgerMenu.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    document.querySelectorAll('.dropdown-link').forEach(link => {
+      link.addEventListener('click', () => {
+        dropdownMenu.classList.remove('show');
+        dropdownMenu.setAttribute('aria-hidden', 'true');
+        burgerMenu.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!burgerMenu.contains(e.target) && !dropdownMenu.contains(e.target)) {
+        dropdownMenu.classList.remove('show');
+        dropdownMenu.setAttribute('aria-hidden', 'true');
+        burgerMenu.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    burgerMenu.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        burgerMenu.click();
+      }
+    });
+
+    let lastScrollY = window.scrollY;
+    window.addEventListener('scroll', () => {
+      const currentScrollY = window.scrollY;
+      const scrollingDown = currentScrollY > lastScrollY;
+      const profile = document.getElementById('profile');
+
+      if (scrollingDown && currentScrollY > 100) {
+        profile.style.opacity = '0';
+        profile.style.pointerEvents = 'none';
+        burgerMenu.style.opacity = '0';
+        burgerMenu.style.pointerEvents = 'none';
+      } else {
+        profile.style.opacity = '1';
+        profile.style.pointerEvents = 'auto';
+        burgerMenu.style.opacity = '1';
+        burgerMenu.style.pointerEvents = 'auto';
+      }
+
+      lastScrollY = currentScrollY;
+    });
+  </script>
+</body>
+</html>
